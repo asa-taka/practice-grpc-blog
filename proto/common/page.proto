@@ -1,6 +1,8 @@
 syntax = "proto3";
 package common;
 
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/common;common";
+
 message PageRequest {
   int32 size = 1;
   int32 from = 2;

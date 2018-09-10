@@ -3,6 +3,8 @@ package blog;
 
 import "common/meta.proto";
 
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/blog";
+
 message Document {
   int32 id = 1;
   common.Meta meta = 2;
