@@ -5,11 +5,14 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"net"
+	"net/http"
 	"sync"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
 
 	pb "github.com/asa-taka/practice-grpc-blog/out/go/account"
 )
@@ -59,15 +62,31 @@ func (s *accountServiceServer) DeleteUser(ctx context.Context, in *pb.DeleteUser
 
 func main() {
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+	// lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	// if err != nil {
+	// 	log.Fatalf("failed to listen: %v", err)
+	// }
+
+	grpcServer := grpc.NewServer()
+
+	pb.RegisterAccountServiceServer(grpcServer, newServer())
+	reflection.Register(grpcServer)
+
+	// grpcServer.Serve(lis)
+
+	// HTTP Server for gRPC Web
+
+	wrappedServer := grpcweb.WrapServer(grpcServer)
+	handler := func(resp http.ResponseWriter, req *http.Request) {
+		wrappedServer.ServeHTTP(resp, req)
 	}
 
-	s := grpc.NewServer()
+	httpServer := http.Server{
+		Addr:    fmt.Sprintf(":%d", *port),
+		Handler: http.HandlerFunc(handler),
+	}
 
-	pb.RegisterAccountServiceServer(s, newServer())
-	reflection.Register(s)
-
-	s.Serve(lis)
+	if err := httpServer.ListenAndServe(); err != nil {
+		grpclog.Fatalf("failed starting http server: %v", err)
+	}
 }
