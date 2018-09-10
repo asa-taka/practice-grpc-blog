@@ -22,7 +22,7 @@ $(GO_OUT)/%.pb.go: proto/%.proto
 
 # TypeScript
 
-TS_OUT := out/ts
+TS_OUT := client/src/proto
 TS_TRGS := $(PROTO_SRCS:proto/%.proto=$(TS_OUT)/%.pb.ts)
 
 ts: $(TS_TRGS)
@@ -36,5 +36,5 @@ $(TS_OUT)/%.pb.ts: proto/%.proto
 # Misc
 
 clean:
-	rm -rf $(GO_OUT)/*
+	rm -rf out/go/*
 	rm -rf $(TS_OUT)/*
