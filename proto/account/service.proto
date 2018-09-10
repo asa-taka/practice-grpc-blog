@@ -1,0 +1,54 @@
+syntax = "proto3";
+package account;
+
+import public "account/data.proto";
+import public "common/page.proto";
+
+service AccountService {
+  rpc QueryUsers(QueryUsersRequest) returns (QueryUsersResponse) {};
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {};
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {};
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {};
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {};
+}
+
+message QueryUsersRequest {
+  common.PageRequest page = 1;
+}
+
+message QueryUsersResponse {
+  repeated User Users = 1;
+  common.PageResponse page = 2;
+}
+
+message GetUserRequest {
+  int32 id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+message CreateUserRequest {
+  User user = 1;
+}
+
+message CreateUserResponse {
+  User user = 1;
+}
+
+message UpdateUserRequest {
+  User user = 1;
+}
+
+message UpdateUserResponse {
+  User user = 1;
+}
+
+message DeleteUserRequest {
+  int32 id = 1;
+}
+
+message DeleteUserResponse {
+  User user = 1;
+}

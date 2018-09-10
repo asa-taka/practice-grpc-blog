@@ -1,0 +1,12 @@
+syntax = "proto3";
+package blog;
+
+import "common/meta.proto";
+
+message Document {
+  int32 id = 1;
+  common.Meta meta = 2;
+  string title = 3;
+  string body = 4;
+  repeated string tags = 5;
+}

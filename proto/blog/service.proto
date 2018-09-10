@@ -1,0 +1,54 @@
+syntax = "proto3";
+package blog;
+
+import public "blog/data.proto";
+import public "common/page.proto";
+
+service BlogService {
+  rpc QueryDocument(QueryDocumentsRequest) returns (QueryDocumentsResponse) {};
+  rpc GetDocument(GetDocumentRequest) returns (GetDocumentResponse) {};
+  rpc CreateDocument(CreateDocumentRequest) returns (CreateDocumentResponse) {};
+  rpc DeleteDocument(DeleteDocumentRequest) returns (DeleteDocumentResponse) {};
+  rpc UpdateDocument(UpdateDocumentRequest) returns (UpdateDocumentResponse) {};
+}
+
+message QueryDocumentsRequest {
+  common.PageRequest page = 1;
+}
+
+message QueryDocumentsResponse {
+  repeated Document documents = 1;
+  common.PageResponse page = 2;
+}
+
+message GetDocumentRequest {
+  int32 id = 1;
+}
+
+message GetDocumentResponse {
+  Document document = 1;
+}
+
+message CreateDocumentRequest {
+  Document document = 1;
+}
+
+message CreateDocumentResponse {
+  Document document = 1;  
+}
+
+message UpdateDocumentRequest {
+  Document document = 1;
+}
+
+message UpdateDocumentResponse {
+  Document document = 1;
+}
+
+message DeleteDocumentRequest {
+  int32 id = 1;
+}
+
+message DeleteDocumentResponse {
+  Document document = 1;
+}

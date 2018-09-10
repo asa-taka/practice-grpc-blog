@@ -1,0 +1,14 @@
+syntax = "proto3";
+package common;
+
+import "google/protobuf/timestamp.proto";
+
+message Meta {
+  MutationLog created = 1;
+  MutationLog updated = 2;
+}
+
+message MutationLog {
+  google.protobuf.Timestamp date = 1;
+  int32 user_id = 2;
+}

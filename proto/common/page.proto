@@ -1,0 +1,12 @@
+syntax = "proto3";
+package common;
+
+message PageRequest {
+  int32 size = 1;
+  int32 from = 2;
+}
+
+message PageResponse {
+  int32 size = 1;
+  int32 from = 2;
+}
