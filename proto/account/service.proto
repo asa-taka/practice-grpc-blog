@@ -4,6 +4,8 @@ package account;
 import public "account/data.proto";
 import public "common/page.proto";
 
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/account";
+
 service AccountService {
   rpc QueryUsers(QueryUsersRequest) returns (QueryUsersResponse) {};
   rpc GetUser(GetUserRequest) returns (GetUserResponse) {};

@@ -4,6 +4,8 @@ package blog;
 import public "blog/data.proto";
 import public "common/page.proto";
 
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/blog";
+
 service BlogService {
   rpc QueryDocument(QueryDocumentsRequest) returns (QueryDocumentsResponse) {};
   rpc GetDocument(GetDocumentRequest) returns (GetDocumentResponse) {};

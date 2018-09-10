@@ -3,6 +3,8 @@ package common;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/common;common";
+
 message Meta {
   MutationLog created = 1;
   MutationLog updated = 2;

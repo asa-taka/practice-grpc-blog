@@ -10,7 +10,7 @@ all: go ts
 
 # Go
 
-GO_OUT := out/go
+GO_OUT := $(GOPATH)/src
 GO_TRGS := $(PROTO_SRCS:proto/%.proto=$(GO_OUT)/%.pb.go)
 
 go: $(GO_TRGS)
