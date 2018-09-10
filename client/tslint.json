@@ -2,12 +2,14 @@
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "linterOptions": {
     "exclude": [
+      "src/proto/**/*.{js,ts}",
       "config/**/*.js",
       "node_modules/**/*.ts",
       "coverage/lcov-report/*.js"
     ]
   },
   "rules": {
+    "interface-name": [true, "never-prefix"],
     "max-line-length": [true, 120],
     "no-console": false,
     "object-literal-sort-keys": false,

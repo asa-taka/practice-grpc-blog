@@ -1,10 +1,16 @@
 import * as React from 'react'
 import './App.css'
 
+import { UserList, WithUsers } from './components'
+
 function App() {
   return (
     <div className="App">
-      App Contents
+      <WithUsers>
+        {({ users }) => (
+          <UserList users={users} />
+        )}
+      </WithUsers>
     </div>
   )
 }
