@@ -1,5 +1,17 @@
+* {
+  margin: 0;
+  border: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*+* {
+  margin-top: 12px;
+}
+
 body {
   margin: 0;
-  padding: 0;
+  padding: 24px;
   font-family: sans-serif;
+  background: #f9f9f9;
 }

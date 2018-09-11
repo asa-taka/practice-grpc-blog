@@ -15,7 +15,18 @@ export interface State {
 export class WithUsers extends React.Component<Props, State> {
   public readonly state: State = {
     users: [
-      { id: 1, 'name': 'asa-taka', email: 'asa-taka@example.com' }
+      {
+        id: 1,
+        name: 'asa-taka',
+        email: 'asa-taka@example.com',
+        status: pb.User.Status.STATUS_ACTIVE,
+      },
+      {
+        id: 2,
+        name: 'tailmoon',
+        email: 'tailmoon@example.com',
+        status: pb.User.Status.STATUS_SUSPENDED,
+      },
     ],
   }
 

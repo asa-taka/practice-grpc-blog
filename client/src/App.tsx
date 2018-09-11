@@ -1,7 +1,7 @@
 import * as React from 'react'
 import './App.css'
 
-import { UserList, WithUsers } from './components'
+import { UserCard, UserList, WithUser, WithUsers } from './components'
 
 function App() {
   return (
@@ -11,6 +11,11 @@ function App() {
           <UserList users={users} />
         )}
       </WithUsers>
+      <WithUser>
+        {({ user }) => (
+          <UserCard user={user} />
+        )}
+      </WithUser>
     </div>
   )
 }
