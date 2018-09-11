@@ -13,6 +13,9 @@ export class User extends jspb.Message {
   getEmail(): string;
   setEmail(value: string): void;
 
+  getStatus(): User.Status;
+  setStatus(value: User.Status): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): User.AsObject;
   static toObject(includeInstance: boolean, msg: User): User.AsObject;
@@ -28,6 +31,12 @@ export namespace User {
     id: number,
     name: string,
     email: string,
+    status: User.Status,
+  }
+
+  export enum Status {
+    STATUS_ACTIVE = 0,
+    STATUS_SUSPENDED = 1,
   }
 }
 

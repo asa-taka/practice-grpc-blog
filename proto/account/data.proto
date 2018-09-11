@@ -7,4 +7,9 @@ message User {
   int32 id = 1;
   string name = 2;
   string email = 3;
+  enum Status {
+    STATUS_ACTIVE = 0;
+    STATUS_SUSPENDED = 1;
+  };
+  Status status = 4;
 }
