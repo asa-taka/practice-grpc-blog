@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "asa-taka",
+    "email": "asa-taka@example.com",
+    "status": "STATUS_ACTIVE"
+  },
+  {
+    "id": 2,
+    "name": "tailmoon",
+    "email": "tailmoon@example.com",
+    "status": "STATUS_SUSPENDED"
+  }
+]

@@ -32,7 +32,7 @@ export class WithUser extends React.Component<Props, State> {
       request,
       host: 'http://localhost:10000',
       onEnd: res => {
-        console.log(res, res.message)
+        console.log(res.message)
       }
     })
   }

@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 
 	"google.golang.org/grpc"
@@ -27,35 +30,34 @@ type accountServiceServer struct {
 }
 
 func newServer() *accountServiceServer {
-
-	s := &accountServiceServer{
-		users: []*pb.User{
-			{
-				Id:     1,
-				Name:   "asa-taka",
-				Email:  "asa-taka@example.com",
-				Status: pb.User_STATUS_ACTIVE,
-			}, {
-				Id:     2,
-				Name:   "tailmoon",
-				Email:  "tailmoon@example.com",
-				Status: pb.User_STATUS_SUSPENDED,
-			},
-		},
+	return &accountServiceServer{
+		users: loadUsers(),
 	}
+}
 
-	return s
+func loadUsers() []*pb.User {
+	jsonFile, err := os.Open("server/data/users.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var users []*pb.User
+	json.Unmarshal(byteValue, &users)
+
+	return users
 }
 
 func (s *accountServiceServer) QueryUsers(ctx context.Context, in *pb.QueryUsersRequest) (*pb.QueryUsersResponse, error) {
-	log.Printf("QueryUsers: %v", in)
 	res := &pb.QueryUsersResponse{Users: s.users}
+	log.Printf("QueryUsers: %v > %v", in, res)
 	return res, nil
 }
 
 func (s *accountServiceServer) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
-	log.Printf("GetUser: %v", in)
 	res := &pb.GetUserResponse{User: s.users[0]}
+	log.Printf("GetUser: %v > %v", in, res)
 	return res, nil
 }
 
