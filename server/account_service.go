@@ -22,23 +22,40 @@ var (
 )
 
 type accountServiceServer struct {
-	mu sync.Mutex
+	mu    sync.Mutex
+	users []*pb.User
 }
 
 func newServer() *accountServiceServer {
-	s := &accountServiceServer{}
+
+	s := &accountServiceServer{
+		users: []*pb.User{
+			{
+				Id:     1,
+				Name:   "asa-taka",
+				Email:  "asa-taka@example.com",
+				Status: pb.User_STATUS_ACTIVE,
+			}, {
+				Id:     2,
+				Name:   "tailmoon",
+				Email:  "tailmoon@example.com",
+				Status: pb.User_STATUS_SUSPENDED,
+			},
+		},
+	}
+
 	return s
 }
 
 func (s *accountServiceServer) QueryUsers(ctx context.Context, in *pb.QueryUsersRequest) (*pb.QueryUsersResponse, error) {
 	log.Printf("QueryUsers: %v", in)
-	res := &pb.QueryUsersResponse{}
+	res := &pb.QueryUsersResponse{Users: s.users}
 	return res, nil
 }
 
 func (s *accountServiceServer) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	log.Printf("GetUser: %v", in)
-	res := &pb.GetUserResponse{}
+	res := &pb.GetUserResponse{User: s.users[0]}
 	return res, nil
 }
 
