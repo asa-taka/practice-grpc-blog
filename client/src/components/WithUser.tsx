@@ -9,17 +9,12 @@ export interface Props {
 }
 
 export interface State {
-  readonly user: pb.User.AsObject
+  readonly user: pb.User.AsObject | null
 }
 
 export class WithUser extends React.Component<Props, State> {
   public readonly state: State = {
-    user: {
-      id: 1,
-      name: 'asa-taka',
-      email: 'asa-taka@example.com',
-      status: pb.User.Status.STATUS_ACTIVE,
-    }
+    user: null,
   }
 
   public render() {
@@ -31,8 +26,10 @@ export class WithUser extends React.Component<Props, State> {
     grpc.unary(pb.AccountService.GetUser, {
       request,
       host: 'http://localhost:10000',
-      onEnd: res => {
-        console.log(res.message)
+      onEnd: (res: any) => {
+        console.log('GetUser', res)
+        const user = res.message.getUser().toObject()
+        this.setState({ user })
       }
     })
   }

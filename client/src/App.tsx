@@ -12,11 +12,15 @@ function App() {
           <UserList users={users} />
         )}
       </WithUsers>
-      
+
       <h2>GetUser</h2>
       <WithUser>
         {({ user }) => (
-          <UserCard user={user} />
+          <>
+            {user && (
+              <UserCard user={user} />
+            )}
+          </>
         )}
       </WithUser>
     </div>
