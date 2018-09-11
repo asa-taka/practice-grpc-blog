@@ -14,20 +14,7 @@ export interface State {
 
 export class WithUsers extends React.Component<Props, State> {
   public readonly state: State = {
-    users: [
-      {
-        id: 1,
-        name: 'asa-taka',
-        email: 'asa-taka@example.com',
-        status: pb.User.Status.STATUS_ACTIVE,
-      },
-      {
-        id: 2,
-        name: 'tailmoon',
-        email: 'tailmoon@example.com',
-        status: pb.User.Status.STATUS_SUSPENDED,
-      },
-    ],
+    users: [],
   }
 
   public render() {
@@ -39,8 +26,12 @@ export class WithUsers extends React.Component<Props, State> {
     grpc.unary(pb.AccountService.QueryUsers, {
       request,
       host: 'http://localhost:10000',
-      onEnd: res => {
-        console.log(res, res.message)
+
+      // NOTE: Type vanished!
+      onEnd: (res: any) => {
+        console.log('QueryUsers', res)
+        const users = res.message.getUsersList().map((u: any) => u.toObject())
+        this.setState({ users })
       }
     })
   }
