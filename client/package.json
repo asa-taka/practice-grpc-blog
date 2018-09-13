@@ -25,5 +25,5 @@
     "tslint": "^5.11.0",
     "typescript": "^3.0.3"
   },
-  "proxy": "http://localhost:10000"
+  "proxy": "http://localhost:10001"
 }
