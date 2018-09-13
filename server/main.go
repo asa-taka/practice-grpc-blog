@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -24,10 +25,13 @@ var (
 func main() {
 	flag.Parse()
 
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(logUnaryInterceptor),
+	)
+
 	account.RegisterNewServer(grpcServer)
 
-	reflection.Register(grpcServer)
+	reflection.Register(grpcServer) // for grpc_cli
 
 	go runGrpcWebServer(grpcServer, *webPort)
 	runGrpcServer(grpcServer, *port)
@@ -57,4 +61,25 @@ func runGrpcWebServer(grpcServer *grpc.Server, port int) {
 	if err := httpServer.ListenAndServe(); err != nil {
 		grpclog.Fatalf("failed starting http server: %v", err)
 	}
+}
+
+// gRPC Interceptor
+// ----------------
+
+func logUnaryInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (res interface{}, err error) {
+	res, err = handler(ctx, req)
+	method := info.FullMethod
+	if err == nil {
+		grpclog.Infof("%s: OK", method)
+		if grpclog.V(1) {
+			grpclog.Infof("%s Request: %v", method, req)
+			grpclog.Infof("%s Response: %v", method, res)
+		}
+	} else {
+		grpclog.Errorf("%s: %v", method, err)
+		if grpclog.V(1) {
+			grpclog.Infof("%s Request: %v", method, req)
+		}
+	}
+	return res, err
 }

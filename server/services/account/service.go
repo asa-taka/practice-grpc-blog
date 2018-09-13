@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"sync"
 
@@ -48,30 +47,25 @@ func loadUsers() []*pb.User {
 
 func (s *accountServiceServer) QueryUsers(ctx context.Context, in *pb.QueryUsersRequest) (*pb.QueryUsersResponse, error) {
 	res := &pb.QueryUsersResponse{Users: s.users}
-	log.Printf("QueryUsers: %v > %v", in, res)
 	return res, nil
 }
 
 func (s *accountServiceServer) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	res := &pb.GetUserResponse{User: s.users[0]}
-	log.Printf("GetUser: %v > %v", in, res)
 	return res, nil
 }
 
 func (s *accountServiceServer) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
-	log.Printf("CreateUser: %v", in)
 	res := &pb.CreateUserResponse{}
 	return res, nil
 }
 
 func (s *accountServiceServer) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
-	log.Printf("UpdateUser: %v", in)
 	res := &pb.UpdateUserResponse{}
 	return res, nil
 }
 
 func (s *accountServiceServer) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
-	log.Printf("DeleteUser: %v", in)
 	res := &pb.DeleteUserResponse{}
 	return res, nil
 }
