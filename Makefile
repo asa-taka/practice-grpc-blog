@@ -30,7 +30,7 @@ ts: $(TS_TRGS)
 $(TS_OUT)/%.pb.ts: proto/%.proto
 	protoc $(PROTO_PATHS) \
 		--js_out="import_style=commonjs,binary:$(TS_OUT)" \
-		--ts_out="$(TS_OUT)" \
+		--ts_out="service=true:$(TS_OUT)" \
 		$<
 
 # Misc

@@ -26,6 +26,8 @@ const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 // Ignoring public import of User from account/data.proto
 
+// Ignoring public import of Status from account/data.proto
+
 // PageRequest from public import common/page.proto
 type PageRequest = common.PageRequest
 

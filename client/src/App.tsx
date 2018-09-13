@@ -1,16 +1,24 @@
 import * as React from 'react'
 import './App.css'
 
-import { UserList, WithUsers } from './components'
+import { UserCard, UserList, WithUser, WithUsers } from './components'
 
 function App() {
   return (
     <div className="App">
+      <h2>QueryUsers</h2>
       <WithUsers>
         {({ users }) => (
           <UserList users={users} />
         )}
       </WithUsers>
+      
+      <h2>GetUser</h2>
+      <WithUser>
+        {({ user }) => (
+          <UserCard user={user} />
+        )}
+      </WithUser>
     </div>
   )
 }

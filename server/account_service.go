@@ -2,14 +2,20 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
-	"net"
+	"net/http"
+	"os"
 	"sync"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/reflection"
+
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
 
 	pb "github.com/asa-taka/practice-grpc-blog/out/go/account"
 )
@@ -19,23 +25,39 @@ var (
 )
 
 type accountServiceServer struct {
-	mu sync.Mutex
+	mu    sync.Mutex
+	users []*pb.User
 }
 
 func newServer() *accountServiceServer {
-	s := &accountServiceServer{}
-	return s
+	return &accountServiceServer{
+		users: loadUsers(),
+	}
+}
+
+func loadUsers() []*pb.User {
+	jsonFile, err := os.Open("server/data/users.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	var users []*pb.User
+	json.Unmarshal(byteValue, &users)
+
+	return users
 }
 
 func (s *accountServiceServer) QueryUsers(ctx context.Context, in *pb.QueryUsersRequest) (*pb.QueryUsersResponse, error) {
-	log.Printf("QueryUsers: %v", in)
-	res := &pb.QueryUsersResponse{}
+	res := &pb.QueryUsersResponse{Users: s.users}
+	log.Printf("QueryUsers: %v > %v", in, res)
 	return res, nil
 }
 
 func (s *accountServiceServer) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
-	log.Printf("GetUser: %v", in)
-	res := &pb.GetUserResponse{}
+	res := &pb.GetUserResponse{User: s.users[0]}
+	log.Printf("GetUser: %v > %v", in, res)
 	return res, nil
 }
 
@@ -59,15 +81,31 @@ func (s *accountServiceServer) DeleteUser(ctx context.Context, in *pb.DeleteUser
 
 func main() {
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+	// lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", *port))
+	// if err != nil {
+	// 	log.Fatalf("failed to listen: %v", err)
+	// }
+
+	grpcServer := grpc.NewServer()
+
+	pb.RegisterAccountServiceServer(grpcServer, newServer())
+	reflection.Register(grpcServer)
+
+	// grpcServer.Serve(lis)
+
+	// HTTP Server for gRPC Web
+
+	wrappedServer := grpcweb.WrapServer(grpcServer)
+	handler := func(resp http.ResponseWriter, req *http.Request) {
+		wrappedServer.ServeHTTP(resp, req)
 	}
 
-	s := grpc.NewServer()
+	httpServer := http.Server{
+		Addr:    fmt.Sprintf(":%d", *port),
+		Handler: http.HandlerFunc(handler),
+	}
 
-	pb.RegisterAccountServiceServer(s, newServer())
-	reflection.Register(s)
-
-	s.Serve(lis)
+	if err := httpServer.ListenAndServe(); err != nil {
+		grpclog.Fatalf("failed starting http server: %v", err)
+	}
 }
