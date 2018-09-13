@@ -15,6 +15,7 @@ import (
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 
 	"github.com/asa-taka/practice-grpc-blog/server/services/account"
+	"github.com/asa-taka/practice-grpc-blog/server/services/blog"
 )
 
 var (
@@ -29,10 +30,13 @@ func main() {
 		grpc.UnaryInterceptor(logUnaryInterceptor),
 	)
 
+	// Register service implementations
 	account.RegisterNewServer(grpcServer)
+	blog.RegisterNewServer(grpcServer)
 
 	reflection.Register(grpcServer) // for grpc_cli
 
+	// Run both gRPC/gRPC-Web
 	go runGrpcWebServer(grpcServer, *webPort)
 	runGrpcServer(grpcServer, *port)
 }

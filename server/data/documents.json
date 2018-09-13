@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "meta": {
+      "created": {
+        "user_id": 1
+      },
+      "updated": {
+        "user_id": 1
+      }
+    },
+    "title": "My Favorite Things",
+    "body": "Today, I introduce my fovarite thins!",
+    "tags": ["my", "favorite", "things"]
+  },
+  {
+    "id": 2,
+    "meta": {
+      "created": {
+        "user_id": 1
+      },
+      "updated": {
+        "user_id": 1
+      }
+    },
+    "title": "My Favorite Things Again",
+    "body": "Today, I introduce my fovarite thins again!",
+    "tags": ["my", "favorite", "things", "again"]
+  }
+]
