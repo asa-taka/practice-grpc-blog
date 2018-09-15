@@ -1,3 +1,3 @@
-// package: common
+// package: blog.common
 // file: common/page.proto
 

@@ -15,7 +15,7 @@ import (
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
 
 	"github.com/asa-taka/practice-grpc-blog/server/services/account"
-	"github.com/asa-taka/practice-grpc-blog/server/services/blog"
+	"github.com/asa-taka/practice-grpc-blog/server/services/document"
 )
 
 var (
@@ -32,7 +32,7 @@ func main() {
 
 	// Register service implementations
 	account.RegisterNewServer(grpcServer)
-	blog.RegisterNewServer(grpcServer)
+	document.RegisterNewServer(grpcServer)
 
 	reflection.Register(grpcServer) // for grpc_cli
 

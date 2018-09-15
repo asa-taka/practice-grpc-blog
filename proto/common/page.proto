@@ -1,5 +1,5 @@
 syntax = "proto3";
-package common;
+package blog.common;
 
 option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/common;common";
 

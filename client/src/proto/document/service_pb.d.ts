@@ -1,8 +1,8 @@
-// package: blog
-// file: blog/service.proto
+// package: blog.document
+// file: document/service.proto
 
 import * as jspb from "google-protobuf";
-import * as blog_data_pb from "../blog/data_pb";
+import * as document_data_pb from "../document/data_pb";
 import * as common_page_pb from "../common/page_pb";
 
 export class QueryDocumentsRequest extends jspb.Message {
@@ -29,9 +29,9 @@ export namespace QueryDocumentsRequest {
 
 export class QueryDocumentsResponse extends jspb.Message {
   clearDocumentsList(): void;
-  getDocumentsList(): Array<blog_data_pb.Document>;
-  setDocumentsList(value: Array<blog_data_pb.Document>): void;
-  addDocuments(value?: blog_data_pb.Document, index?: number): blog_data_pb.Document;
+  getDocumentsList(): Array<document_data_pb.Document>;
+  setDocumentsList(value: Array<document_data_pb.Document>): void;
+  addDocuments(value?: document_data_pb.Document, index?: number): document_data_pb.Document;
 
   hasPage(): boolean;
   clearPage(): void;
@@ -50,7 +50,7 @@ export class QueryDocumentsResponse extends jspb.Message {
 
 export namespace QueryDocumentsResponse {
   export type AsObject = {
-    documentsList: Array<blog_data_pb.Document.AsObject>,
+    documentsList: Array<document_data_pb.Document.AsObject>,
     page?: common_page_pb.PageResponse.AsObject,
   }
 }
@@ -78,8 +78,8 @@ export namespace GetDocumentRequest {
 export class GetDocumentResponse extends jspb.Message {
   hasDocument(): boolean;
   clearDocument(): void;
-  getDocument(): blog_data_pb.Document | undefined;
-  setDocument(value?: blog_data_pb.Document): void;
+  getDocument(): document_data_pb.Document | undefined;
+  setDocument(value?: document_data_pb.Document): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): GetDocumentResponse.AsObject;
@@ -93,15 +93,15 @@ export class GetDocumentResponse extends jspb.Message {
 
 export namespace GetDocumentResponse {
   export type AsObject = {
-    document?: blog_data_pb.Document.AsObject,
+    document?: document_data_pb.Document.AsObject,
   }
 }
 
 export class CreateDocumentRequest extends jspb.Message {
   hasDocument(): boolean;
   clearDocument(): void;
-  getDocument(): blog_data_pb.Document | undefined;
-  setDocument(value?: blog_data_pb.Document): void;
+  getDocument(): document_data_pb.Document | undefined;
+  setDocument(value?: document_data_pb.Document): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateDocumentRequest.AsObject;
@@ -115,15 +115,15 @@ export class CreateDocumentRequest extends jspb.Message {
 
 export namespace CreateDocumentRequest {
   export type AsObject = {
-    document?: blog_data_pb.Document.AsObject,
+    document?: document_data_pb.Document.AsObject,
   }
 }
 
 export class CreateDocumentResponse extends jspb.Message {
   hasDocument(): boolean;
   clearDocument(): void;
-  getDocument(): blog_data_pb.Document | undefined;
-  setDocument(value?: blog_data_pb.Document): void;
+  getDocument(): document_data_pb.Document | undefined;
+  setDocument(value?: document_data_pb.Document): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): CreateDocumentResponse.AsObject;
@@ -137,15 +137,15 @@ export class CreateDocumentResponse extends jspb.Message {
 
 export namespace CreateDocumentResponse {
   export type AsObject = {
-    document?: blog_data_pb.Document.AsObject,
+    document?: document_data_pb.Document.AsObject,
   }
 }
 
 export class UpdateDocumentRequest extends jspb.Message {
   hasDocument(): boolean;
   clearDocument(): void;
-  getDocument(): blog_data_pb.Document | undefined;
-  setDocument(value?: blog_data_pb.Document): void;
+  getDocument(): document_data_pb.Document | undefined;
+  setDocument(value?: document_data_pb.Document): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateDocumentRequest.AsObject;
@@ -159,15 +159,15 @@ export class UpdateDocumentRequest extends jspb.Message {
 
 export namespace UpdateDocumentRequest {
   export type AsObject = {
-    document?: blog_data_pb.Document.AsObject,
+    document?: document_data_pb.Document.AsObject,
   }
 }
 
 export class UpdateDocumentResponse extends jspb.Message {
   hasDocument(): boolean;
   clearDocument(): void;
-  getDocument(): blog_data_pb.Document | undefined;
-  setDocument(value?: blog_data_pb.Document): void;
+  getDocument(): document_data_pb.Document | undefined;
+  setDocument(value?: document_data_pb.Document): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): UpdateDocumentResponse.AsObject;
@@ -181,7 +181,7 @@ export class UpdateDocumentResponse extends jspb.Message {
 
 export namespace UpdateDocumentResponse {
   export type AsObject = {
-    document?: blog_data_pb.Document.AsObject,
+    document?: document_data_pb.Document.AsObject,
   }
 }
 
@@ -208,8 +208,8 @@ export namespace DeleteDocumentRequest {
 export class DeleteDocumentResponse extends jspb.Message {
   hasDocument(): boolean;
   clearDocument(): void;
-  getDocument(): blog_data_pb.Document | undefined;
-  setDocument(value?: blog_data_pb.Document): void;
+  getDocument(): document_data_pb.Document | undefined;
+  setDocument(value?: document_data_pb.Document): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): DeleteDocumentResponse.AsObject;
@@ -223,7 +223,7 @@ export class DeleteDocumentResponse extends jspb.Message {
 
 export namespace DeleteDocumentResponse {
   export type AsObject = {
-    document?: blog_data_pb.Document.AsObject,
+    document?: document_data_pb.Document.AsObject,
   }
 }
 

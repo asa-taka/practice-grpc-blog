@@ -1,4 +1,4 @@
-// package: account
+// package: blog.account
 // file: account/service.proto
 
 var account_service_pb = require("../account/service_pb");
@@ -6,7 +6,7 @@ var grpc = require("grpc-web-client").grpc;
 
 var AccountService = (function () {
   function AccountService() {}
-  AccountService.serviceName = "account.AccountService";
+  AccountService.serviceName = "blog.account.AccountService";
   return AccountService;
 }());
 
