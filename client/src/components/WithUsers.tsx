@@ -3,6 +3,7 @@ import * as React from 'react'
 import { grpc } from 'grpc-web-client'
 
 import * as pb from 'src/proto'
+import config from 'src/config'
 
 import { RequestState } from './RequestIndicator'
 
@@ -32,7 +33,7 @@ export class WithUsers extends React.Component<Props, State> {
     const request = new pb.QueryUsersRequest()
     grpc.unary(pb.AccountService.QueryUsers, {
       request,
-      host: 'http://localhost:10001',
+      host: config.grpc,
 
       // NOTE: Type vanished!
       onEnd: (res: any) => {

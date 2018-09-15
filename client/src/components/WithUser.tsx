@@ -3,6 +3,7 @@ import * as React from 'react'
 import { grpc } from 'grpc-web-client'
 
 import * as pb from 'src/proto'
+import config from 'src/config'
 
 import { RequestState } from './RequestIndicator'
 
@@ -33,7 +34,9 @@ export class WithUser extends React.Component<Props, State> {
     request.setId(1)
     grpc.unary(pb.AccountService.GetUser, {
       request,
-      host: 'http://localhost:10001',
+      host: config.grpc,
+
+      // NOTE: Type vanished!
       onEnd: (res: any) => {
         console.log('GetUser', res)
         const data = res.message.getUser().toObject()
