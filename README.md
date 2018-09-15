@@ -4,5 +4,12 @@
 
 ```sh
 cd server
-go run account_service.go
+go run server/main.go
+```
+
+### Log
+
+```sh
+export GRPC_GO_LOG_SEVERITY_LEVEL=info
+export GRPC_GO_LOG_VERBOSITY_LEVEL=1
 ```
