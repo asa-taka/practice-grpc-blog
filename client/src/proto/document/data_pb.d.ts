@@ -1,5 +1,5 @@
-// package: blog
-// file: blog/data.proto
+// package: blog.document
+// file: document/data.proto
 
 import * as jspb from "google-protobuf";
 import * as common_meta_pb from "../common/meta_pb";

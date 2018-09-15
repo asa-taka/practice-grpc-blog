@@ -1,13 +1,13 @@
 syntax = "proto3";
-package blog;
+package blog.document;
 
 import "common/meta.proto";
 
-option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/blog";
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/document";
 
 message Document {
   int32 id = 1;
-  common.Meta meta = 2;
+  blog.common.Meta meta = 2;
   string title = 3;
   string body = 4;
   repeated string tags = 5;

@@ -1,4 +1,4 @@
-// package: account
+// package: blog.account
 // file: account/service.proto
 
 import * as account_service_pb from "../account/service_pb";

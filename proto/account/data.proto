@@ -1,5 +1,5 @@
 syntax = "proto3";
-package account;
+package blog.account;
 
 option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/account";
 

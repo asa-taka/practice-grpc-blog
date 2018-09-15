@@ -1,12 +1,12 @@
-// package: blog
-// file: blog/service.proto
+// package: blog.document
+// file: document/service.proto
 
-var blog_service_pb = require("../blog/service_pb");
+var document_service_pb = require("../document/service_pb");
 var grpc = require("grpc-web-client").grpc;
 
 var BlogService = (function () {
   function BlogService() {}
-  BlogService.serviceName = "blog.BlogService";
+  BlogService.serviceName = "blog.document.BlogService";
   return BlogService;
 }());
 
@@ -15,8 +15,8 @@ BlogService.QueryDocument = {
   service: BlogService,
   requestStream: false,
   responseStream: false,
-  requestType: blog_service_pb.QueryDocumentsRequest,
-  responseType: blog_service_pb.QueryDocumentsResponse
+  requestType: document_service_pb.QueryDocumentsRequest,
+  responseType: document_service_pb.QueryDocumentsResponse
 };
 
 BlogService.GetDocument = {
@@ -24,8 +24,8 @@ BlogService.GetDocument = {
   service: BlogService,
   requestStream: false,
   responseStream: false,
-  requestType: blog_service_pb.GetDocumentRequest,
-  responseType: blog_service_pb.GetDocumentResponse
+  requestType: document_service_pb.GetDocumentRequest,
+  responseType: document_service_pb.GetDocumentResponse
 };
 
 BlogService.CreateDocument = {
@@ -33,8 +33,8 @@ BlogService.CreateDocument = {
   service: BlogService,
   requestStream: false,
   responseStream: false,
-  requestType: blog_service_pb.CreateDocumentRequest,
-  responseType: blog_service_pb.CreateDocumentResponse
+  requestType: document_service_pb.CreateDocumentRequest,
+  responseType: document_service_pb.CreateDocumentResponse
 };
 
 BlogService.DeleteDocument = {
@@ -42,8 +42,8 @@ BlogService.DeleteDocument = {
   service: BlogService,
   requestStream: false,
   responseStream: false,
-  requestType: blog_service_pb.DeleteDocumentRequest,
-  responseType: blog_service_pb.DeleteDocumentResponse
+  requestType: document_service_pb.DeleteDocumentRequest,
+  responseType: document_service_pb.DeleteDocumentResponse
 };
 
 BlogService.UpdateDocument = {
@@ -51,8 +51,8 @@ BlogService.UpdateDocument = {
   service: BlogService,
   requestStream: false,
   responseStream: false,
-  requestType: blog_service_pb.UpdateDocumentRequest,
-  responseType: blog_service_pb.UpdateDocumentResponse
+  requestType: document_service_pb.UpdateDocumentRequest,
+  responseType: document_service_pb.UpdateDocumentResponse
 };
 
 exports.BlogService = BlogService;

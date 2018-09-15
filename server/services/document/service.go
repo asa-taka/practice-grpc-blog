@@ -1,4 +1,4 @@
-package blog
+package document
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/golang/protobuf/jsonpb"
 	"google.golang.org/grpc"
 
-	pb "github.com/asa-taka/practice-grpc-blog/out/go/blog"
+	pb "github.com/asa-taka/practice-grpc-blog/out/go/document"
 	"github.com/asa-taka/practice-grpc-blog/server/services/util"
 )
 

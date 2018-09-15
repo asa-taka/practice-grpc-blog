@@ -1,10 +1,10 @@
 syntax = "proto3";
-package blog;
+package blog.document;
 
-import public "blog/data.proto";
-import public "common/page.proto";
+import "document/data.proto";
+import "common/page.proto";
 
-option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/blog";
+option go_package = "github.com/asa-taka/practice-grpc-blog/out/go/document";
 
 service BlogService {
   rpc QueryDocument(QueryDocumentsRequest) returns (QueryDocumentsResponse) {};
@@ -15,12 +15,12 @@ service BlogService {
 }
 
 message QueryDocumentsRequest {
-  common.PageRequest page = 1;
+  blog.common.PageRequest page = 1;
 }
 
 message QueryDocumentsResponse {
   repeated Document documents = 1;
-  common.PageResponse page = 2;
+  blog.common.PageResponse page = 2;
 }
 
 message GetDocumentRequest {

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package account;
+package blog.account;
 
 import public "account/data.proto";
 import public "common/page.proto";
@@ -15,12 +15,12 @@ service AccountService {
 }
 
 message QueryUsersRequest {
-  common.PageRequest page = 1;
+  blog.common.PageRequest page = 1;
 }
 
 message QueryUsersResponse {
   repeated User Users = 1;
-  common.PageResponse page = 2;
+  blog.common.PageResponse page = 2;
 }
 
 message GetUserRequest {
@@ -28,23 +28,23 @@ message GetUserRequest {
 }
 
 message GetUserResponse {
-  User user = 1;
+  blog.account.User user = 1;
 }
 
 message CreateUserRequest {
-  User user = 1;
+  blog.account.User user = 1;
 }
 
 message CreateUserResponse {
-  User user = 1;
+  blog.account.User user = 1;
 }
 
 message UpdateUserRequest {
-  User user = 1;
+  blog.account.User user = 1;
 }
 
 message UpdateUserResponse {
-  User user = 1;
+  blog.account.User user = 1;
 }
 
 message DeleteUserRequest {
@@ -52,5 +52,5 @@ message DeleteUserRequest {
 }
 
 message DeleteUserResponse {
-  User user = 1;
+  blog.account.User user = 1;
 }

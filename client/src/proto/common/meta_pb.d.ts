@@ -1,4 +1,4 @@
-// package: common
+// package: blog.common
 // file: common/meta.proto
 
 import * as jspb from "google-protobuf";

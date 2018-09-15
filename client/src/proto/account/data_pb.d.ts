@@ -1,4 +1,4 @@
-// package: account
+// package: blog.account
 // file: account/data.proto
 
 import * as jspb from "google-protobuf";

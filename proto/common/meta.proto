@@ -1,5 +1,5 @@
 syntax = "proto3";
-package common;
+package blog.common;
 
 import "google/protobuf/timestamp.proto";
 
