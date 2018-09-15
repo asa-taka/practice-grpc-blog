@@ -4,34 +4,41 @@ import { grpc } from 'grpc-web-client'
 
 import * as pb from 'src/proto'
 
+import { RequestState } from './RequestIndicator'
+
 export interface Props {
-  children: (state: State) => React.ReactNode
+  children: (data: pb.User.AsObject[]) => React.ReactNode
 }
 
-export interface State {
-  readonly users: pb.User.AsObject[]
-}
+export type State = RequestState<pb.User.AsObject[]>
 
 export class WithUsers extends React.Component<Props, State> {
+
   public readonly state: State = {
-    users: [],
+    status: 'loading',
+    data: null,
+    error: null
   }
 
   public render() {
-    return this.props.children(this.state)
+    const { status, data, error } = this.state
+    if (!data) {
+      return null
+    }
+    return this.props.children(data)
   }
 
   public componentDidMount() {
     const request = new pb.QueryUsersRequest()
     grpc.unary(pb.AccountService.QueryUsers, {
       request,
-      host: 'http://localhost:10000',
+      host: 'http://localhost:10001',
 
       // NOTE: Type vanished!
       onEnd: (res: any) => {
         console.log('QueryUsers', res)
-        const users = res.message.getUsersList().map((u: any) => u.toObject())
-        this.setState({ users })
+        const data = res.message.getUsersList().map((u: any) => u.toObject())
+        this.setState({ data, status: 'success' })
       }
     })
   }

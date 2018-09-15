@@ -1,24 +1,25 @@
 import * as React from 'react'
 import './App.css'
 
-import { UserCard, UserList, WithUser, WithUsers } from './components'
+import { RequestIndicator, UserCard, UserList, WithUser, WithUsers } from './components'
 
 function App() {
   return (
     <div className="App">
       <h2>QueryUsers</h2>
       <WithUsers>
-        {({ users }) => (
-          <UserList users={users} />
+        {data => (
+          <UserList users={data} />
         )}
       </WithUsers>
-      
+
       <h2>GetUser</h2>
       <WithUser>
-        {({ user }) => (
-          <UserCard user={user} />
+        {data => (
+          <UserCard user={data} />
         )}
       </WithUser>
+
     </div>
   )
 }
