@@ -2,15 +2,15 @@ package account
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
+	"log"
 	"sync"
 
+	"github.com/golang/protobuf/jsonpb"
 	"google.golang.org/grpc"
 
 	pb "github.com/asa-taka/practice-grpc-blog/out/go/account"
+	"github.com/asa-taka/practice-grpc-blog/server/services/util"
 )
 
 func RegisterNewServer(grpcServer *grpc.Server) {
@@ -23,23 +23,20 @@ type accountServiceServer struct {
 }
 
 func newServer() *accountServiceServer {
-	return &accountServiceServer{
-		users: loadUsers(),
-	}
+	s := &accountServiceServer{}
+	s.loadUsers("server/data/users.json")
+	return s
 }
 
-func loadUsers() []*pb.User {
-	jsonFile, err := os.Open("server/data/users.json")
-	if err != nil {
-		fmt.Println(err)
+func (s *accountServiceServer) loadUsers(filePath string) {
+	decoder := util.CreateArrayJSONDecoder(filePath)
+	for decoder.More() {
+		u := pb.User{}
+		if err := jsonpb.UnmarshalNext(decoder, &u); err != nil {
+			log.Fatal(err)
+		}
+		s.users = append(s.users, &u)
 	}
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	var users []*pb.User
-	json.Unmarshal(byteValue, &users)
-
-	return users
 }
 
 // rpc Handlers
@@ -51,21 +48,32 @@ func (s *accountServiceServer) QueryUsers(ctx context.Context, in *pb.QueryUsers
 }
 
 func (s *accountServiceServer) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
-	res := &pb.GetUserResponse{User: s.users[0]}
-	return res, nil
+	u, err := s.getUserByID(in.Id)
+	return &pb.GetUserResponse{User: u}, err
 }
 
 func (s *accountServiceServer) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
-	res := &pb.CreateUserResponse{}
+	res := &pb.CreateUserResponse{User: in.User} // mock
 	return res, nil
 }
 
 func (s *accountServiceServer) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
-	res := &pb.UpdateUserResponse{}
+	res := &pb.UpdateUserResponse{User: in.User} // mock
 	return res, nil
 }
 
 func (s *accountServiceServer) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
-	res := &pb.DeleteUserResponse{}
-	return res, nil
+	u, err := s.getUserByID(in.Id) // mock
+	return &pb.DeleteUserResponse{User: u}, err
+}
+
+// Utilities
+
+func (s *accountServiceServer) getUserByID(id int32) (*pb.User, error) {
+	for _, u := range s.users {
+		if u.Id == id {
+			return u, nil
+		}
+	}
+	return nil, fmt.Errorf("User not found: %v", id)
 }

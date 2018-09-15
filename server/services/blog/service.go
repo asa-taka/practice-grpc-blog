@@ -2,15 +2,15 @@ package blog
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
+	"log"
 	"sync"
 
+	"github.com/golang/protobuf/jsonpb"
 	"google.golang.org/grpc"
 
 	pb "github.com/asa-taka/practice-grpc-blog/out/go/blog"
+	"github.com/asa-taka/practice-grpc-blog/server/services/util"
 )
 
 func RegisterNewServer(grpcServer *grpc.Server) {
@@ -23,23 +23,20 @@ type accountServiceServer struct {
 }
 
 func newServer() *accountServiceServer {
-	return &accountServiceServer{
-		documents: loadDocuments(),
-	}
+	s := &accountServiceServer{}
+	s.loadDocuments("server/data/documents.json")
+	return s
 }
 
-func loadDocuments() []*pb.Document {
-	jsonFile, err := os.Open("server/data/documents.json")
-	if err != nil {
-		fmt.Println(err)
+func (s *accountServiceServer) loadDocuments(filePath string) {
+	decoder := util.CreateArrayJSONDecoder(filePath)
+	for decoder.More() {
+		u := pb.Document{}
+		if err := jsonpb.UnmarshalNext(decoder, &u); err != nil {
+			log.Fatal(err)
+		}
+		s.documents = append(s.documents, &u)
 	}
-	defer jsonFile.Close()
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
-	var docs []*pb.Document
-	json.Unmarshal(byteValue, &docs)
-
-	return docs
 }
 
 // rpc Handlers
@@ -51,21 +48,32 @@ func (s *accountServiceServer) QueryDocument(ctx context.Context, in *pb.QueryDo
 }
 
 func (s *accountServiceServer) GetDocument(ctx context.Context, in *pb.GetDocumentRequest) (*pb.GetDocumentResponse, error) {
-	res := &pb.GetDocumentResponse{Document: s.documents[0]}
-	return res, nil
+	d, err := s.getDocumentByID(in.Id)
+	return &pb.GetDocumentResponse{Document: d}, err
 }
 
 func (s *accountServiceServer) CreateDocument(ctx context.Context, in *pb.CreateDocumentRequest) (*pb.CreateDocumentResponse, error) {
-	res := &pb.CreateDocumentResponse{}
+	res := &pb.CreateDocumentResponse{Document: in.Document} // mock
 	return res, nil
 }
 
 func (s *accountServiceServer) UpdateDocument(ctx context.Context, in *pb.UpdateDocumentRequest) (*pb.UpdateDocumentResponse, error) {
-	res := &pb.UpdateDocumentResponse{}
+	res := &pb.UpdateDocumentResponse{} // mock
 	return res, nil
 }
 
 func (s *accountServiceServer) DeleteDocument(ctx context.Context, in *pb.DeleteDocumentRequest) (*pb.DeleteDocumentResponse, error) {
-	res := &pb.DeleteDocumentResponse{}
-	return res, nil
+	d, err := s.getDocumentByID(in.Id) // mock
+	return &pb.DeleteDocumentResponse{Document: d}, err
+}
+
+// Utilities
+
+func (s *accountServiceServer) getDocumentByID(id int32) (*pb.Document, error) {
+	for _, d := range s.documents {
+		if d.Id == id {
+			return d, nil
+		}
+	}
+	return nil, fmt.Errorf("Document not found: %v", id)
 }
